@@ -34,6 +34,17 @@ iot_agent\stm32h7xx_it.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.
 iot_agent\stm32h7xx_it.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h
 iot_agent\stm32h7xx_it.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h
 iot_agent\stm32h7xx_it.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h
+iot_agent\stm32h7xx_it.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h
+iot_agent\stm32h7xx_it.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
 iot_agent\stm32h7xx_it.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h
 iot_agent\stm32h7xx_it.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h
 iot_agent\stm32h7xx_it.o: ../Core/Inc/stm32h7xx_it.h
+iot_agent\stm32h7xx_it.o: ..\ThirdParty\FreeRTOS\include\FreeRTOS.h
+iot_agent\stm32h7xx_it.o: ../Core/Inc/FreeRTOSConfig.h
+iot_agent\stm32h7xx_it.o: ..\ThirdParty\FreeRTOS\include\projdefs.h
+iot_agent\stm32h7xx_it.o: ..\ThirdParty\FreeRTOS\include\portable.h
+iot_agent\stm32h7xx_it.o: ..\ThirdParty\FreeRTOS\include\deprecated_definitions.h
+iot_agent\stm32h7xx_it.o: ..\ThirdParty\FreeRTOS\Portable\ARM_CM7\r0p1\portmacro.h
+iot_agent\stm32h7xx_it.o: ..\ThirdParty\FreeRTOS\include\mpu_wrappers.h
+iot_agent\stm32h7xx_it.o: ..\ThirdParty\FreeRTOS\include\task.h
+iot_agent\stm32h7xx_it.o: ..\ThirdParty\FreeRTOS\include\list.h

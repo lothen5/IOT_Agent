@@ -1,0 +1,14 @@
+iot_agent\stream_buffer.o: ..\ThirdParty\FreeRTOS\Source\stream_buffer.c
+iot_agent\stream_buffer.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+iot_agent\stream_buffer.o: D:\Keil5\ARM\ARMCC\Bin\..\include\string.h
+iot_agent\stream_buffer.o: ..\ThirdParty\FreeRTOS\include\FreeRTOS.h
+iot_agent\stream_buffer.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+iot_agent\stream_buffer.o: ../Core/Inc/FreeRTOSConfig.h
+iot_agent\stream_buffer.o: ..\ThirdParty\FreeRTOS\include\projdefs.h
+iot_agent\stream_buffer.o: ..\ThirdParty\FreeRTOS\include\portable.h
+iot_agent\stream_buffer.o: ..\ThirdParty\FreeRTOS\include\deprecated_definitions.h
+iot_agent\stream_buffer.o: ..\ThirdParty\FreeRTOS\Portable\ARM_CM7\r0p1\portmacro.h
+iot_agent\stream_buffer.o: ..\ThirdParty\FreeRTOS\include\mpu_wrappers.h
+iot_agent\stream_buffer.o: ..\ThirdParty\FreeRTOS\include\task.h
+iot_agent\stream_buffer.o: ..\ThirdParty\FreeRTOS\include\list.h
+iot_agent\stream_buffer.o: ..\ThirdParty\FreeRTOS\include\stream_buffer.h

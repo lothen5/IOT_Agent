@@ -101,6 +101,7 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   printf("h743 boot ok\r\n");
+  freertos_start();
   /* USER CODE END 2 */
 
   /* Infinite loop */
