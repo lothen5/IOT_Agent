@@ -8,6 +8,7 @@
 #include "string.h"
 #include <stdio.h>
 #include "gpio.h"
+#include "W5500.h"
 
 
 /* 启动任务函数 */
@@ -26,6 +27,10 @@ void task1(void *pvParameters);
 TaskHandle_t uarttask_handle;
 void task2(void *pvParameters);
 
+#define w5500task_PRIORITY 2
+#define w5500task_STACK_DEPTH 512
+TaskHandle_t w5500task_handle;
+void w5500task(void *pvParameters);
 
 
 
@@ -63,6 +68,14 @@ void Start_Task(void *pvParameters)
         TASK2_PRIORITY, 
         &uarttask_handle
     );
+    xTaskCreate(
+        w5500task, 
+        "w5500task", 
+        w5500task_STACK_DEPTH, 
+        NULL, 
+        w5500task_PRIORITY, 
+        &w5500task_handle
+    );
 
     /* 启动任务只需要执行一次即可，用完就删除自己 */
     
@@ -90,6 +103,58 @@ void task2(void *pvParameters)
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
+
+void w5500task(void *pvParameters)
+{
+    uint8_t version;
+
+    (void)pvParameters;
+
+    printf("W5500 network test start\r\n");
+
+    W5500_HardReset();
+
+    version = W5500_ReadVersion();
+
+    printf("W5500 VERSIONR = 0x%02X\r\n", version);
+
+    if (version != W5500_VERSION_VALUE)
+    {
+        printf("W5500 SPI ERROR\r\n");
+
+        while (1)
+        {
+            vTaskDelay(pdMS_TO_TICKS(1000));
+        }
+    }
+
+    printf("W5500 SPI OK\r\n");
+
+    W5500_NetworkConfig();
+    W5500_PrintNetworkInfo();
+
+    printf("Please ping 192.168.1.123 from PC.\r\n");
+
+    while (!W5500_IsLinkUp())
+    {
+        printf("W5500 Link DOWN\r\n");
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+
+    printf("W5500 Link UP\r\n");
+
+    vTaskDelay(pdMS_TO_TICKS(5000));
+
+    W5500_HTTP_GET_Test();
+
+    while (1)
+    {
+        printf("W5500 task alive\r\n");
+        vTaskDelay(pdMS_TO_TICKS(5000));
+    }
+}
+
+
 
 void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
                                    StackType_t **ppxIdleTaskStackBuffer,
