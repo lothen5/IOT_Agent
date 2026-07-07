@@ -1025,6 +1025,21 @@
               <FileType>1</FileType>
               <FilePath>../App/Src/FreeRTOS_Demo.c</FilePath>
             </File>
+            <File>
+              <FileName>http_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\App\Src\http_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>simple_json.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\App\Src\simple_json.c</FilePath>
+            </File>
+            <File>
+              <FileName>device_tool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\App\Src\device_tool.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

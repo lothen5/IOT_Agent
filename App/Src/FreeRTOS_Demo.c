@@ -9,6 +9,10 @@
 #include <stdio.h>
 #include "gpio.h"
 #include "W5500.h"
+#include "http_client.h"
+#include "simple_json.h"
+#include "device_tool.h"
+
 
 
 /* 启动任务函数 */
@@ -27,10 +31,10 @@ void task1(void *pvParameters);
 TaskHandle_t uarttask_handle;
 void task2(void *pvParameters);
 
-#define w5500task_PRIORITY 2
-#define w5500task_STACK_DEPTH 512
-TaskHandle_t w5500task_handle;
-void w5500task(void *pvParameters);
+#define TASK_W5500_PRIORITY 2
+#define TASK_W5500_STACK_DEPTH 512
+TaskHandle_t task_w5500_handle;
+void task_w5500(void *pvParameters);
 
 
 
@@ -69,12 +73,12 @@ void Start_Task(void *pvParameters)
         &uarttask_handle
     );
     xTaskCreate(
-        w5500task, 
-        "w5500task", 
-        w5500task_STACK_DEPTH, 
+        task_w5500, 
+        "task_w5500", 
+        TASK_W5500_STACK_DEPTH, 
         NULL, 
-        w5500task_PRIORITY, 
-        &w5500task_handle
+        TASK_W5500_PRIORITY, 
+        &task_w5500_handle
     );
 
     /* 启动任务只需要执行一次即可，用完就删除自己 */
@@ -90,7 +94,7 @@ void task1(void *pvParameters)
     while (1)
     {
         HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_7);
-        vTaskDelay(pdMS_TO_TICKS(500));
+        vTaskDelay(pdMS_TO_TICKS(5000));
        
     }
 }
@@ -104,9 +108,24 @@ void task2(void *pvParameters)
     }
 }
 
-void w5500task(void *pvParameters)
+void task_w5500(void *pvParameters)
 {
     uint8_t version;
+    uint8_t server_ip[4] = {192, 168, 1, 100};
+
+    static char response[1024];
+
+    const char *json_body =
+        "{\"input\":\"Blink LED 5 times\"}";
+
+    const char *body_ptr;
+
+    char action[32];
+    char msg[64];
+
+    int times = 0;
+    int ret;
+    int tool_ret;
 
     (void)pvParameters;
 
@@ -133,8 +152,6 @@ void w5500task(void *pvParameters)
     W5500_NetworkConfig();
     W5500_PrintNetworkInfo();
 
-    printf("Please ping 192.168.1.123 from PC.\r\n");
-
     while (!W5500_IsLinkUp())
     {
         printf("W5500 Link DOWN\r\n");
@@ -143,9 +160,77 @@ void w5500task(void *pvParameters)
 
     printf("W5500 Link UP\r\n");
 
-    vTaskDelay(pdMS_TO_TICKS(5000));
+    vTaskDelay(pdMS_TO_TICKS(2000));
 
-    W5500_HTTP_GET_Test();
+    ret = http_post(server_ip,
+                    8080,
+                    "192.168.1.100",
+                    "/api/test",
+                    "application/json",
+                    json_body,
+                    response,
+                    sizeof(response));
+
+    if (ret >= 0)
+    {
+        printf("HTTP POST full response:\r\n");
+        printf("%s\r\n", response);
+
+        body_ptr = http_get_body(response);
+
+        if (body_ptr != NULL)
+        {
+            printf("HTTP response body:\r\n");
+            printf("%s\r\n", body_ptr);
+
+            if (json_get_string(body_ptr, "action", action, sizeof(action)) == SIMPLE_JSON_OK)
+            {
+                printf("JSON action = %s\r\n", action);
+
+                if (json_get_int(body_ptr, "times", &times) == SIMPLE_JSON_OK)
+                {
+                    printf("JSON times = %d\r\n", times);
+                }
+                else
+                {
+                    printf("JSON times parse failed, use default 1\r\n");
+                    times = 1;
+                }
+
+                if (json_get_string(body_ptr, "msg", msg, sizeof(msg)) == SIMPLE_JSON_OK)
+                {
+                    printf("JSON msg = %s\r\n", msg);
+                }
+                else
+                {
+                    printf("JSON msg parse failed\r\n");
+                }
+
+                tool_ret = device_tool_execute(action, times);
+
+                if (tool_ret == DEVICE_TOOL_OK)
+                {
+                    printf("Tool execute OK\r\n");
+                }
+                else
+                {
+                    printf("Tool execute failed, ret=%d\r\n", tool_ret);
+                }
+            }
+            else
+            {
+                printf("JSON action parse failed\r\n");
+            }
+        }
+        else
+        {
+            printf("HTTP body not found\r\n");
+        }
+    }
+    else
+    {
+        printf("http_post failed, ret=%d\r\n", ret);
+    }
 
     while (1)
     {
@@ -153,6 +238,8 @@ void w5500task(void *pvParameters)
         vTaskDelay(pdMS_TO_TICKS(5000));
     }
 }
+
+
 
 
 
