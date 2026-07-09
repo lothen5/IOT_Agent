@@ -116,7 +116,7 @@ void task_w5500(void *pvParameters)
     static char response[1024];
 
     const char *json_body =
-        "{\"input\":\"Blink LED 5 times\"}";
+        "{\"input\":\"Blink LED 10 times\"}";
 
     const char *body_ptr;
 

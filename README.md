@@ -1,19 +1,26 @@
-以太网设置保持
+# IOT_Agent
 
-IP 地址：192.168.1.100
-子网掩码：255.255.255.0
-网关：空
-首选 DNS：空
-备用 DNS：空
+STM32H743 + FreeRTOS + W5500 embedded AI Agent terminal.
 
+## Local network test
 
-启动GET测试服务器
+- Device IP: `192.168.1.100`
+- Subnet mask: `255.255.255.0`
 
-cd /d D:\STM32project\STM32H743\IOT_Agent\http_test
+Start the HTTP GET test server:
+
+```powershell
+cd http_test
 python -m http.server 8080 --bind 192.168.1.100
+```
 
+Start the DeepSeek proxy server:
 
-启动 POST 测试服务器
-
-cd /d D:\STM32project\STM32H743\IOT_Agent\http_test
+```powershell
+cd http_test
+$env:DEEPSEEK_API_KEY = "your_api_key_here"
 python post_server.py
+```
+
+The API key is read from the `DEEPSEEK_API_KEY` environment variable and must
+never be committed to the repository.
