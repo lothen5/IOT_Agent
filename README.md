@@ -24,3 +24,12 @@ python post_server.py
 
 The API key is read from the `DEEPSEEK_API_KEY` environment variable and must
 never be committed to the repository.
+
+## Planned device mapping
+
+| Input | Output |
+| --- | --- |
+| Light sensor | LED |
+| Temperature sensor | Fan |
+| Human presence sensor | LED |
+| Smoke sensor | Buzzer |

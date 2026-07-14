@@ -57,6 +57,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define FAN_CTRL_Pin GPIO_PIN_7
+#define FAN_CTRL_GPIO_Port GPIOE
+#define BUZZER_CTRL_Pin GPIO_PIN_8
+#define BUZZER_CTRL_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
 

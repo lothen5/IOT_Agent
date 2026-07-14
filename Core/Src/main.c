@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include "FreeRTOS_Demo.h"
 
 /* USER CODE END Includes */
 
@@ -101,6 +102,14 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   printf("h743 boot ok\r\n");
+
+  if (uart_command_receive_start() != HAL_OK)
+  {
+    printf("USART1 RX start failed\r\n");
+    Error_Handler();
+  }
+
+  printf("USART1 command RX ready\r\n");
   freertos_start();
   /* USER CODE END 2 */
 

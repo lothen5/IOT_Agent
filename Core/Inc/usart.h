@@ -35,13 +35,21 @@ extern "C" {
 extern UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN Private defines */
+#define UART_COMMAND_BUFFER_SIZE 256U
 
+#define UART_COMMAND_GET_INVALID_ARG   (-1)
+#define UART_COMMAND_GET_BUFFER_SMALL  (-2)
 /* USER CODE END Private defines */
 
 void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+HAL_StatusTypeDef uart_command_receive_start(void);
+uint8_t uart_command_is_ready(void);
+int uart_command_get(char *out_buffer, uint16_t out_buffer_size);
+uint8_t uart_command_take_overflow(void);
+uint8_t uart_command_take_dropped(void);
+uint8_t uart_command_take_rx_error(void);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
