@@ -61,6 +61,10 @@ void Error_Handler(void);
 #define FAN_CTRL_GPIO_Port GPIOE
 #define BUZZER_CTRL_Pin GPIO_PIN_8
 #define BUZZER_CTRL_GPIO_Port GPIOE
+#define HUMAN_Pin GPIO_PIN_9
+#define HUMAN_GPIO_Port GPIOE
+#define LIGHT_LED_Pin GPIO_PIN_13
+#define LIGHT_LED_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
 
