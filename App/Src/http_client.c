@@ -343,4 +343,3 @@ const char *http_get_body(const char *http_response)
 
     return body + 4;
 }
-
