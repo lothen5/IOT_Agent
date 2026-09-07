@@ -1,0 +1,17 @@
+# Keil build output
+MDK-ARM/IOT_Agent/
+MDK-ARM/*.uvguix.*
+MDK-ARM/*.lst
+
+# Python runtime and local secrets
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
